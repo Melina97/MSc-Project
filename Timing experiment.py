@@ -1,5 +1,6 @@
 
 from firedrake import *
+import math
 
 from firedrake_adjoint import *
 
@@ -24,8 +25,6 @@ slot_cyl = conditional(sqrt(pow(x-cyl_x0, 2) + pow(y-cyl_y0, 2)) < cyl_r0,
 
 q_init = Function(V).interpolate(1.0 + bell + cone + slot_cyl)
 q = Function(V)
-
-qs = []
 
 T = 2*math.pi
 dt = T/600.0
@@ -82,4 +81,45 @@ J = assemble(J_form)**.5
 m = Control(q_init)
 Jhat = ReducedFunctional(J, m)
 
-print("J")
+print("The functional (i.e. the L2 error) is:", J)
+
+tape = get_working_tape()
+tape.clear_tape()
+
+import time
+
+start_time = time.time()
+
+t = 0.0
+step = 0
+output_freq = 20
+q = Function(V).assign(q_init)
+
+while t < T - 0.5*dt:
+    solv1.solve()
+    q1.assign(q + dq)
+
+    solv2.solve()
+    q2.assign(0.75*q + 0.25*(q1 + dq))
+
+    solv3.solve()
+    q.assign((1.0/3.0)*q + (2.0/3.0)*(q2 + dq))
+
+    step += 1
+    t += dt
+    
+J_form = ((q - q_init)*(q - q_init))*dx
+J = assemble(J_form)**.5
+m = Control(q_init)
+Jhat = ReducedFunctional(J, m)
+
+print('The taping takes: %s seconds' % (time.time() - start_time))
+
+Jhat_q_init = Jhat(q_init)
+
+print('Running the tape takes: %s seconds' % (time.time() - start_time))
+
+Jhat_deriv = Jhat.derivative()
+
+print('Computing the derivative of the reduced functional takes: %s seconds' % (time.time() - start_time))
+
