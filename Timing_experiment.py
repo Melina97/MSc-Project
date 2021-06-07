@@ -2,11 +2,9 @@
 from firedrake import *
 from firedrake_adjoint import *
 from DG_advection_equation_with_upwinding import DG_advection_timing
-import math
-import time
 
-# Run the function without annotating the tape
-with stop_annotating():  # context manager
+# Run function without annotating tape (context manager)
+with stop_annotating():
     DG_advection_timing(40, 40, 600.0, options={"ksp_max_it": 100, "ksp_type": "cg"})
 
 # Timing experiment
