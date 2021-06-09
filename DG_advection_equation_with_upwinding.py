@@ -5,9 +5,9 @@ import math
 import time
 
 
-def DG_advection_solve(nx, ny, nt, options=None, **kwargs):
+def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
     
-    mesh = UnitSquareMesh(nx, ny, quadrilateral=True)
+    mesh = UnitSquareMesh(x_coords, y_coords, quadrilateral=True)
     V = FunctionSpace(mesh, "DQ", 1)
     W = VectorFunctionSpace(mesh, "CG", 1)
 
@@ -30,8 +30,8 @@ def DG_advection_solve(nx, ny, nt, options=None, **kwargs):
     q_init = Function(V).interpolate(1.0 + bell + cone + slot_cyl)
     q = Function(V)
 
-    T = 2*math.pi
-    dt = T/nt
+    T = 2 * math.pi
+    dt = T / time_steps
     dtc = Constant(dt)
     q_in = Constant(1.0)
 
@@ -62,8 +62,6 @@ def DG_advection_solve(nx, ny, nt, options=None, **kwargs):
     prob3 = LinearVariationalProblem(a, L3, dq)
     solv3 = LinearVariationalSolver(prob3, solver_parameters=params)
 
-    start_time = time.time()  # time taping, running tape and derivative
-
     q = Function(V).assign(q_init)
     t = 0.0
     step = 0
@@ -87,9 +85,9 @@ def DG_advection_solve(nx, ny, nt, options=None, **kwargs):
     Jhat = ReducedFunctional(J, m)
 
 
-def DG_advection_timing(nx, ny, nt, print_times=None, options=None, **kwargs):
+def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, options=None, **kwargs):
     
-    mesh = UnitSquareMesh(nx, ny, quadrilateral=True)
+    mesh = UnitSquareMesh(x_coords, y_coords, quadrilateral=True)
     V = FunctionSpace(mesh, "DQ", 1)
     W = VectorFunctionSpace(mesh, "CG", 1)
 
@@ -112,8 +110,8 @@ def DG_advection_timing(nx, ny, nt, print_times=None, options=None, **kwargs):
     q_init = Function(V).interpolate(1.0 + bell + cone + slot_cyl)
     q = Function(V)
 
-    T = 2*math.pi
-    dt = T/nt
+    T = 2 * math.pi
+    dt = T / time_steps
     dtc = Constant(dt)
     q_in = Constant(1.0)
 
@@ -170,13 +168,13 @@ def DG_advection_timing(nx, ny, nt, print_times=None, options=None, **kwargs):
 
     if print_times:
         print('The taping takes: %s seconds' % (time.time() - start_time))
-        print("The functional J = ", J)
+        #print("The functional J = ", J)
 
         Jhat_q_init = Jhat(q_init)
         print('Running the tape takes: %s seconds' % (time.time() - start_time))
-        print("Jhat(q_init) = ", Jhat_q_init.dat.data[:])
+        #print("Jhat(q_init) = ", Jhat_q_init)
 
         Jhat_deriv = Jhat.derivative()
         print('Computing the derivative of the reduced functional takes: %s seconds' % (time.time() - start_time))
-        print("Derivative of Jhat = ", Jhat_deriv.dat.data[:])
+        #print("Derivative of Jhat = ", Jhat_deriv.dat.data[:])
 
