@@ -142,6 +142,7 @@ def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, option
     prob3 = LinearVariationalProblem(a, L3, dq)
     solv3 = LinearVariationalSolver(prob3, solver_parameters=params)
 
+
     start_time = time.time()  # time taping, running tape and derivative
 
     q = Function(V).assign(q_init)
@@ -170,9 +171,13 @@ def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, option
         print('The taping takes: %s seconds' % (time.time() - start_time))
         #print("The functional J = ", J)
 
+        start_time = time.time()
+
         Jhat_q_init = Jhat(q_init)
         print('Running the tape takes: %s seconds' % (time.time() - start_time))
         #print("Jhat(q_init) = ", Jhat_q_init)
+
+        start_time = time.time()
 
         Jhat_deriv = Jhat.derivative()
         print('Computing the derivative of the reduced functional takes: %s seconds' % (time.time() - start_time))
