@@ -7,7 +7,7 @@ import time
 
 def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
     
-    with PETSc.Log.Event("Problem setup"):    
+    with PETSc.Log.Stage("Problem setup"):    
         with PETSc.Log.Event("Problem setup"):    
             mesh = UnitSquareMesh(x_coords, y_coords, quadrilateral=True)
             V = FunctionSpace(mesh, "DQ", 1)
@@ -103,7 +103,7 @@ def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
 
 def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, options=None, **kwargs):
     
-    with PETSc.Log.Event("Problem setup"):    
+    with PETSc.Log.Stage("Problem setup"):    
         with PETSc.Log.Event("Problem setup"):    
             mesh = UnitSquareMesh(x_coords, y_coords, quadrilateral=True)
             V = FunctionSpace(mesh, "DQ", 1)
