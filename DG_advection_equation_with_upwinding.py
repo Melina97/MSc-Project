@@ -66,7 +66,6 @@ def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
 
     with PETSc.Log.Stage("Taping"):
         with PETSc.Log.Event("Taping"):
-            start_time = time.time()  # time taping, running tape and derivative
 
             q = Function(V).assign(q_init)
             t = 0.0
@@ -92,12 +91,10 @@ def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
 
     with PETSc.Log.Stage("Running tape"):
         with PETSc.Log.Event("Running tape"):
-            start_time = time.time()
             Jhat_q_init = Jhat(q_init)
             
     with PETSc.Log.Stage("Computing derivative"):
         with PETSc.Log.Event("Computing derivative"):
-            start_time = time.time()
             Jhat_deriv = Jhat.derivative()
 
 
