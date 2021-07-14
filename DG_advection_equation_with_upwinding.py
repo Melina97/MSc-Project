@@ -177,7 +177,7 @@ def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, option
 
                 step += 1
                 t += dt
-        
+                
             J_form = ((q - q_init)*(q - q_init))*dx
             J = assemble(J_form)**.5
             m = Control(q_init)
