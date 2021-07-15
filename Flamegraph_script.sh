@@ -4,7 +4,7 @@
 export OMP_NUM_THREADS=1
 
 # activate venv
-source firedrake/bin/activate
+# source firedrake/bin/activate
 
 # checkout master branch
 cd ~/firedrake/src/firedrake 
