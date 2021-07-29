@@ -8,9 +8,9 @@ export OMP_NUM_THREADS=1
 
 # checkout master branch
 cd ~/firedrake/src/firedrake 
-git checkout master
+git checkout Melina97/before_changes
 cd ~/firedrake/src/PyOP2
-git checkout master
+git checkout Melina97/before_changes
 
 # enter MSc repo
 cd ~/Desktop/MScProject/Code/MSc-Project
@@ -21,9 +21,9 @@ python Timing_experiment.py -log_view :flamegraph_without_cache.txt:ascii_flameg
 
 # checkout Melina97/cache_assign branch and Melina97/fix_cache_problem branch
 cd ~/firedrake/src/firedrake
-git checkout Melina97/cache_assign
+git checkout Melina97/after_changes
 cd ~/firedrake/src/PyOP2
-git checkout Melina97/fix_cache_problem
+git checkout Melina97/after_changes
 
 # enter MSc repo
 cd ~/Desktop/MScProject/Code/MSc-Project
