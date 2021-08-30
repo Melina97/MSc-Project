@@ -1,11 +1,9 @@
 #!/bin/bash
 
-""" 
-Some notes: 
-Make sure to activate Firedrake venv.
-Adjust path to Firedrake folder and MSc repository if necessary. 
-Flame graphs will be saved as svg files in MSc-Project.
-""" 
+# Some notes: 
+# Make sure to activate Firedrake venv.
+# Adjust path to Firedrake folder and MSc repository if necessary. 
+# Flame graphs will be saved as svg files in MSc-Project.
 
 # Set OMP_NUM_THREADS=1
 export OMP_NUM_THREADS=1
