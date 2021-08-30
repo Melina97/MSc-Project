@@ -3,6 +3,7 @@ from firedrake import *
 from firedrake_adjoint import *
 from DG_advection_equation_with_upwinding import DG_advection_solve, DG_advection_timing
 
+
 # Run function without annotating tape (Cache warmup)
 with PETSc.Log.Stage("Cache warmup"):
     with PETSc.Log.Event("Cache warmup"):
