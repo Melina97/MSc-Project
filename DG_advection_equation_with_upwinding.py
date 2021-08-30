@@ -5,6 +5,7 @@ import math
 import time
 
 
+# Solve the DG advection equation with upwinding 
 def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
     
     with PETSc.Log.Stage("Problem setup"):    
@@ -91,13 +92,14 @@ def DG_advection_solve(x_coords, y_coords, time_steps, options=None, **kwargs):
 
     with PETSc.Log.Stage("Running tape"):
         with PETSc.Log.Event("Running tape"):
-            Jhat_q_init = Jhat(q_init)
+            Jhat(q_init)
             
     with PETSc.Log.Stage("Computing derivative"):
         with PETSc.Log.Event("Computing derivative"):
-            Jhat_deriv = Jhat.derivative()
+            Jhat.derivative()
 
 
+# Function that prints timings
 def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, options=None, **kwargs):
     
     with PETSc.Log.Stage("Problem setup"):    
@@ -189,11 +191,11 @@ def DG_advection_timing(x_coords, y_coords, time_steps, print_times=None, option
         with PETSc.Log.Stage("Running tape"):
             with PETSc.Log.Event("Running tape"):
                 start_time = time.time()
-                Jhat_q_init = Jhat(q_init)
+                Jhat(q_init)
             print('Running the tape takes: %s seconds' % (time.time() - start_time))
 
         with PETSc.Log.Stage("Computing derivative"):
             with PETSc.Log.Event("Computing derivative"):
                 start_time = time.time()
-                Jhat_deriv = Jhat.derivative()
+                Jhat.derivative()
             print('Computing the derivative of the reduced functional takes: %s seconds' % (time.time() - start_time))
