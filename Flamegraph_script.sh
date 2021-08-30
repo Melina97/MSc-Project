@@ -1,35 +1,33 @@
 #!/bin/bash
 
-# set OMP_NUM_THREADS=1
+# Notes: make sure to activate Firedrake venv!
+# Adjust path to Firedrake folder and MSc repository if necessary. 
+
+# Set OMP_NUM_THREADS=1
 export OMP_NUM_THREADS=1
 
-# activate venv
-# source firedrake/bin/activate
-
-# checkout master branch
+# Checkout Melina97/before_changes branch
 cd ~/firedrake/src/firedrake 
 git checkout Melina97/before_changes
 cd ~/firedrake/src/PyOP2
-git checkout master
-#git checkout Melina97/before_changes
+git checkout Melina97/before_changes
 
-# enter MSc repo
+# Enter MSc repo
 cd ~/Desktop/MScProject/Code/MSc-Project
 
-# make flame graph for master branch
-python Timing_experiment.py -log_view :flamegraph_without_changes.txt:ascii_flamegraph
-./flamegraph.pl --title="Flame Graph: before changes" --countname="microseconds" flamegraph_without_changes.txt > flamegraph_without_changes.svg
+# Create a flame graph for Melina97/before_changes branch
+python Timing_experiment.py -log_view :flamegraph_before_changes.txt:ascii_flamegraph
+./flamegraph.pl --title="Flame Graph: before changes" --countname="microseconds" flamegraph_before_changes.txt > flamegraph_before_changes.svg
 
-# checkout Melina97/cache_assign branch and Melina97/fix_cache_problem branch
+# Checkout Melina97/after_changes branch
 cd ~/firedrake/src/firedrake
 git checkout Melina97/after_changes
 cd ~/firedrake/src/PyOP2
-git checkout master
-#git checkout Melina97/after_changes
+git checkout Melina97/after_changes
 
-# enter MSc repo
+# Enter MSc repo
 cd ~/Desktop/MScProject/Code/MSc-Project
 
-# make flame graph for Melina97/cache_assign branch
-python Timing_experiment.py -log_view :flamegraph_with_changes.txt:ascii_flamegraph
-./flamegraph.pl --title="Flame Graph: after changes" --countname="microseconds" flamegraph_with_changes.txt > flamegraph_with_changes.svg
+# Create a flame graph for Melina97/after_changes branch
+python Timing_experiment.py -log_view :flamegraph_after_changes.txt:ascii_flamegraph
+./flamegraph.pl --title="Flame Graph: after changes" --countname="microseconds" flamegraph_after_changes.txt > flamegraph_after_changes.svg
