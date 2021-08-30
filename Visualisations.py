@@ -2,23 +2,22 @@
 from firedrake import *
 from firedrake_adjoint import *
 
-# create AdjFloat
 
+# Create AdjFloats
 a = AdjFloat(2)
 b = AdjFloat(27)
-e = AdjFloat(0.001)
-f = AdjFloat(3.14)
-g = AdjFloat(70)
+c = AdjFloat(0.001)
+d = AdjFloat(3.14)
+e = AdjFloat(70)
 
-#operations
+# Perform operations
+j = b*e
+k = e**(1/a)
+l = c+d
+m = l-k
+n = e/j
+o = m-n
 
-j = b*g
-k = g**(1/a)
-m = e+f
-o = m-k
-p = g/j
-q = o-p
-
+# Visualise the tape
 tape = get_working_tape()
-tape.visualise(output='test1.dot', launch_tensorboard=False, open_in_browser=True)
-
+tape.visualise(output='tape_adjfloats.dot', launch_tensorboard=False, open_in_browser=True)
